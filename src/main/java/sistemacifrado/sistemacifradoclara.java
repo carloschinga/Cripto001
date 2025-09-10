@@ -4,46 +4,41 @@
  */
 package sistemacifrado;
 
-/**
- *
- * @author Clara
- */
 public class sistemacifradoclara {
-    public static String cifrar(String mensajeOri){
-        String mensajeC="";
-        int len = mensajeC.length();
-        for(int i=0; i<len;i++){
-            char c= mensajeC.charAt(i);
-            int code=(int )c;
-            code+=1;
-            char nc=(char) code;
-            mensajeC+=nc;
+
+    public static String cifrar(String mensajeOri) {
+        String mensajeC = "";
+        int len = mensajeOri.length();
+        for (int i = 0; i < len; i++) {
+            char c = mensajeOri.charAt(i);
+            int code = (int) c;
+            code += 1; 
+            char nc = (char) code;
+            mensajeC += nc;
         }
         return mensajeC;
     }
-    
-      public static String descifrar(String mensajeOri){
-        String mensajeC="";
-        int len = mensajeC.length();
-        for(int i=0; i<len;i++){
-            char c= mensajeC.charAt(i);
-            int code=(int )c;
-            code-=1;
-            char nc=(char) code;
-            mensajeC+=nc;
+
+    public static String descifrar(String mensajeOri) {
+        String mensajeC = "";
+        int len = mensajeOri.length();
+        for (int i = 0; i < len; i++) {
+            char c = mensajeOri.charAt(i);
+            int code = (int) c;
+            code -= 1;
+            char nc = (char) code;
+            mensajeC += nc;
         }
         return mensajeC;
     }
-      
-      
-      public static void main(String[] args) {
-        String mensajeO=" SEÑRITA NO DEBE DE LLEGRA TARDE";
+
+    public static void main(String[] args) {
+        String mensajeO = "SEÑORITA NO DEBE DE LLEGAR TARDE";
         String mensajeCifrado = sistemacifradoclara.cifrar(mensajeO);
-        String mensajeDescifrado= sistemacifradoclara.descifrar(mensajeCifrado);
-        
-          System.out.println(mensajeO);
-          System.out.println(mensajeCifrado);
-          System.out.println(mensajeDescifrado);
-          
+        String mensajeDescifrado = sistemacifradoclara.descifrar(mensajeCifrado);
+
+        System.out.println("Original: " + mensajeO);
+        System.out.println("Cifrado: " + mensajeCifrado);
+        System.out.println("Descifrado: " + mensajeDescifrado);
     }
 }
