@@ -4,57 +4,67 @@
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
-  <body>
-    <h1> Cifrado de Cesar </h1> 
-    <p>Texto a Cifrar</p>
-    <input type="text" id="txtCifrar">
-    <button id="btnCifrar">Cifrar</button> 
-    <p id="lblMensajeOriginal"></p>
-    <p id="lblMensajeCifrado"></p>
-    <p id="lblMensajeDescifrado"></p>
-    <script>
-        let mensajeOriginal = "";
-        let mensajeCifrado = "";
-        let mensajeDescifrado = "";
-        
-        
-        
-        const btnCifrar = document.getElementById("btnCifrar");
-        btnCifrar.addEventListener("click", function (){
-          mensajeOriginal = document.getElementById("txtCifrar").value;
-        mensajeCifrado = cifrar(mensajeOriginal);
-        mensajeDescifrado = descifrar(mensajeCifrado);  
-            document.getElementById("lblMensajeOriginal").innerText = "Mensaje Original: " + mensajeOriginal;
-            document.getElementById("lblMensajeCifrado").innerText = "Mensaje Cifrado: " + mensajeCifrado;
-            document.getElementById("lblMensajeDescifrado").innerText = "Mensaje Descifrado: " + mensajeDescifrado;
-        });
+    <body>
+        <h1> Cifrado de Cesar </h1> 
+        <p>Texto a Cifrar</p>
+        <input type="text" id="txtCifrar">
+        <button id="btnCifrar">Cifrar</button> 
+        <p id="lblMensajeOriginal"></p>
+        <p id="lblMensajeCifrado"></p>
+        <p id="lblMensajeDescifrado"></p>
+        <script>
+            let mensajeOriginal = "";
+            let mensajeCifrado = "";
+            let mensajeDescifrado = "";
 
-        function cifrar(mensajeOriginal){
-            let nuevoMensaje = "";
-            let len = mensajeOriginal.length;
-            for(let i= 0; i<len;i++){
-                let c = mensajeOriginal.charCodeAt(i);
-                let code = parseInt(c);
-                code +=1;
-                let nc = String.fromCharCode(code);
-                nuevoMensaje += nc;
-            }
-            return nuevoMensaje;                
-        }
 
-        function descifrar(mensajeOriginal){
-            let nuevoMensaje = "";
-            let len = mensajeOriginal.length;
-            for(let i= 0; i<len;i++){
-                let c = mensajeOriginal.charCodeAt(i);
-                let code = parseInt(c);
-                code -=1;
-                let nc = String.fromCharCode(code);
-                nuevoMensaje += nc;
+
+            const btnCifrar = document.getElementById("btnCifrar");
+            btnCifrar.addEventListener("click", function () {
+                mensajeOriginal = document.getElementById("txtCifrar").value;
+                mensajeCifrado = cifrar(mensajeOriginal);
+                fetch(`proceso?mensajeCifrado=${encodeURIComponent(mensajeCifrado)}`)
+                        .then(response => response.text()) // o .json() si el servlet devuelve JSON
+                        .then(data => {
+                            
+                            document.getElementById("lblMensajeOriginal").innerText = "Mensaje Original: " + mensajeOriginal;
+                            document.getElementById("lblMensajeCifrado").innerText = "Mensaje Cifrado: " + mensajeCifrado;
+                            document.getElementById("lblMensajeDescifrado").innerText = "Mensaje Descifrado: " + data;
+                            
+                        })
+                        .catch(error => console.error("Error:", error));
+
+
+                /*mensajeDescifrado = descifrar(mensajeCifrado);*/
+                
+            });
+
+            function cifrar(mensajeOriginal) {
+                let nuevoMensaje = "";
+                let len = mensajeOriginal.length;
+                for (let i = 0; i < len; i++) {
+                    let c = mensajeOriginal.charCodeAt(i);
+                    let code = parseInt(c);
+                    code += 1;
+                    let nc = String.fromCharCode(code);
+                    nuevoMensaje += nc;
+                }
+                return nuevoMensaje;
             }
-            return nuevoMensaje;
-        }
-    </script>
-</body>
+
+            function descifrar(mensajeOriginal) {
+                let nuevoMensaje = "";
+                let len = mensajeOriginal.length;
+                for (let i = 0; i < len; i++) {
+                    let c = mensajeOriginal.charCodeAt(i);
+                    let code = parseInt(c);
+                    code -= 1;
+                    let nc = String.fromCharCode(code);
+                    nuevoMensaje += nc;
+                }
+                return nuevoMensaje;
+            }
+        </script>
+    </body>
 
 </html>
